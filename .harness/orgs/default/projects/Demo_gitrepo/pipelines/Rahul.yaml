@@ -29,7 +29,15 @@ pipeline:
                   name: Maven Build
                   identifier: Maven_Build
                   spec:
-                    shell: Sh
+                    shell: Bash
                     command: |-
-                      ls -R /harness
-                      mvn -f /harness/pom.xml clean install
+                      - step:
+                          type: Run
+                          name: Maven_Build
+                          identifier: Maven_Build
+                          spec:
+                            shell: Sh
+                            command: |
+                              cd /harness/rahulstg
+                              ls -la
+                              mvn clean install
