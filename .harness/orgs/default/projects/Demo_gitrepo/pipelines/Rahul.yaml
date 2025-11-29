@@ -33,6 +33,7 @@ pipeline:
                   spec:
                     shell: Bash
                     command: |-
+                      echo "Codebase path = <+codebase.path>"
                       cd <+codebase.path>
                       ls -la
                       mvn clean install
