@@ -30,6 +30,6 @@ pipeline:
                   identifier: Maven_Build
                   spec:
                     shell: Sh
-                    command: |
+                    command: |-
                       ls -R /harness
                       mvn -f /harness/pom.xml clean install
