@@ -3,22 +3,19 @@ pipeline:
   identifier: Rahul
   projectIdentifier: Demo_gitrepo
   orgIdentifier: default
-  tags: {}
   properties:
     ci:
       codebase:
         connectorRef: bobo
         build: <+input>
+        sparseCheckout: []
   stages:
     - stage:
         name: rahulstg
         identifier: rahulstg
-        description: ""
         type: CI
         spec:
           cloneCodebase: true
-          buildIntelligence:
-            enabled: true
           platform:
             os: Linux
             arch: Amd64
@@ -29,20 +26,10 @@ pipeline:
             steps:
               - step:
                   type: Run
-                  name: Run_1
-                  identifier: Run_1
+                  name: Maven Build
+                  identifier: Maven_Build
                   spec:
                     shell: Sh
-                    command: mvn clean install
-                  description: desc
-              - step:
-                  type: GitClone
-                  name: GitClone_1
-                  identifier: GitClone_1
-                  spec:
-                    connectorRef: bobo
-                    cloneDirectory: default
-                    build:
-                      type: branch
-                      spec:
-                        branch: main
+                    command: |
+                      ls -R /harness
+                      mvn -f /harness/pom.xml clean install
