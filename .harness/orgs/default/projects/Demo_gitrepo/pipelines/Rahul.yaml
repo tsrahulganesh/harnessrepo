@@ -7,10 +7,8 @@ pipeline:
     ci:
       codebase:
         connectorRef: bobo
-        build:
-          type: branch
-          spec:
-            branch: main
+        build: <+input>
+        sparseCheckout: []
   stages:
     - stage:
         name: rahulstg
@@ -28,8 +26,23 @@ pipeline:
             steps:
               - step:
                   type: Run
+                  name: Debug
+                  identifier: Debug
+                  spec:
+                    shell: Bash
+                    command: |-
+                      echo "Codebase path = <+codebase.path>"
+                      echo "--- Listing /harness ---"
+                      ls -la /harness
+                      echo "--- Listing Codebase Directory ---"
+                      ls -la <+codebase.path>
+              - step:
+                  type: Run
                   name: Maven Build
                   identifier: Maven_Build
                   spec:
                     shell: Bash
-                    command: mvn clean install
+                    command: |-
+                      cd <+codebase.path>
+                      ls -la
+                      mvn clean install
