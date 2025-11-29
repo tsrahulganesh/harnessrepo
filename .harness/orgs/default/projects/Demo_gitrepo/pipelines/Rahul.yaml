@@ -35,3 +35,14 @@ pipeline:
                     shell: Sh
                     command: mvn clean install
                   description: desc
+              - step:
+                  type: GitClone
+                  name: GitClone_1
+                  identifier: GitClone_1
+                  spec:
+                    connectorRef: bobo
+                    cloneDirectory: default
+                    build:
+                      type: branch
+                      spec:
+                        branch: main
