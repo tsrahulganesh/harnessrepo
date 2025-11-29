@@ -31,13 +31,6 @@ pipeline:
                   spec:
                     shell: Bash
                     command: |-
-                      - step:
-                          type: Run
-                          name: Maven_Build
-                          identifier: Maven_Build
-                          spec:
-                            shell: Sh
-                            command: |
-                              cd /harness/rahulstg
-                              ls -la
-                              mvn clean install
+                      cd <+codebase.path>
+                      ls -la
+                      mvn clean install
