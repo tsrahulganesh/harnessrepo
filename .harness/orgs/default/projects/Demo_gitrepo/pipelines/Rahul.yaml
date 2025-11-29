@@ -32,8 +32,4 @@ pipeline:
                   identifier: Maven_Build
                   spec:
                     shell: Bash
-                    command: |-
-                      echo "Codebase path = <+codebase.path>"
-                      cd <+codebase.path>
-                      ls -la
-                      mvn clean install
+                    command: mvn clean install
