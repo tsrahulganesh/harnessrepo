@@ -1,0 +1,37 @@
+pipeline:
+  name: Rahul
+  identifier: Rahul
+  projectIdentifier: Demo_gitrepo
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: bobo
+        build: <+input>
+  stages:
+    - stage:
+        name: rahulstg
+        identifier: rahulstg
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          buildIntelligence:
+            enabled: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Run_1
+                  identifier: Run_1
+                  spec:
+                    shell: Sh
+                    command: mvn clean install
+                  description: desc
