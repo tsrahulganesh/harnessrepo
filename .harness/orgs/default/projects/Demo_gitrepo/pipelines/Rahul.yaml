@@ -7,8 +7,10 @@ pipeline:
     ci:
       codebase:
         connectorRef: bobo
-        build: <+input>
-        sparseCheckout: []
+        build:
+          type: branch
+          spec:
+            branch: main
   stages:
     - stage:
         name: rahulstg
