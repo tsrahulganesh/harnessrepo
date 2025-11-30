@@ -14,8 +14,8 @@ pipeline:
             branch: main
   stages:
     - stage:
-        name: build22
-        identifier: build22
+        name: Build_Stage
+        identifier: Build_Stage
         type: CI
         spec:
           cloneCodebase: true
@@ -38,6 +38,15 @@ pipeline:
                       apt-get install -y openjdk-11-jdk
                       java -version
               - step:
+                  type: Run
+                  name: Maven Package
+                  identifier: Maven_Package
+                  spec:
+                    shell: Bash
+                    command: |
+                      mvn -v
+                      mvn clean package
+              - step:
                   type: RunTests
                   name: Maven Test and Reports
                   identifier: Maven_Test
@@ -45,7 +54,7 @@ pipeline:
                     shell: Bash
                     language: Java
                     buildTool: Maven
-                    args: clean test
+                    args: test
                     reports:
                       type: JUnit
                       spec:
@@ -60,6 +69,3 @@ pipeline:
                     command: |
                       mkdir -p .harness
                       cp target/*.jar .harness/
-                    artifacts:
-                      paths:
-                        - .harness/*.jar
