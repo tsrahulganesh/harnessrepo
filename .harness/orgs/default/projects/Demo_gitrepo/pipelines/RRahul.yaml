@@ -14,12 +14,9 @@ pipeline:
     - stage:
         name: build22
         identifier: build22
-        description: ""
         type: CI
         spec:
           cloneCodebase: true
-          buildIntelligence:
-            enabled: true
           platform:
             os: Linux
             arch: Amd64
@@ -30,9 +27,30 @@ pipeline:
             steps:
               - step:
                   type: Run
-                  name: Run_1
-                  identifier: Run_1
+                  name: Install JDK 17
+                  identifier: Install_JDK_17
                   spec:
                     shell: Bash
-                    command: mvn clean install
-                  description: desc
+                    command: |
+                      apt-get update
+                      apt-get install -y openjdk-17-jdk
+                      java -version
+              - step:
+                  type: Run
+                  name: Debug Path
+                  identifier: Debug_Path
+                  spec:
+                    shell: Bash
+                    command: |
+                      echo "Codebase path: <+codebase.path>"
+                      ls -la <+codebase.path>
+              - step:
+                  type: Run
+                  name: Maven Build
+                  identifier: Maven_Build
+                  spec:
+                    shell: Bash
+                    command: |
+                      cd <+codebase.path>
+                      mvn -v
+                      mvn clean install
