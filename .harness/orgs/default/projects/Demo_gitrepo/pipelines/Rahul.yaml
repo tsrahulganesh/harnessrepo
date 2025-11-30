@@ -7,11 +7,11 @@ pipeline:
     ci:
       codebase:
         connectorRef: bobo
+        repoName: harnessrepo
         build:
           type: branch
           spec:
             branch: main
-        sparseCheckout: []
   stages:
     - stage:
         name: rahulstg
@@ -35,7 +35,6 @@ pipeline:
                     shell: Bash
                     command: |
                       echo "Codebase path = <+codebase.path>"
-                      echo "--- Listing Codebase Directory ---"
                       ls -la <+codebase.path>
               - step:
                   type: Run
@@ -45,4 +44,5 @@ pipeline:
                     shell: Bash
                     command: |
                       cd <+codebase.path>
+                      mvn -v
                       mvn clean install
