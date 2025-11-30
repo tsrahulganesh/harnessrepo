@@ -19,13 +19,6 @@ pipeline:
         type: CI
         spec:
           cloneCodebase: true
-          codebase:
-            connectorRef: rrahul
-            repoName: automation-ci
-            build:
-              type: branch
-              spec:
-                branch: main
           platform:
             os: Linux
             arch: Amd64
@@ -46,19 +39,14 @@ pipeline:
                       java -version
               - step:
                   type: Run
-                  name: Debug Path
-                  identifier: Debug_Path
-                  spec:
-                    shell: Bash
-                    command: |
-                      echo "Codebase path: <+codebase.path>"
-                      ls -la <+codebase.path>
-              - step:
-                  type: Run
                   name: Maven Build
                   identifier: Maven_Build
                   spec:
                     shell: Bash
                     command: |
-                      cd <+codebase.path>
+                      echo "Current working directory:"
+                      pwd
+                      echo "Files in repo:"
+                      ls -la
+                      mvn -v
                       mvn clean install
