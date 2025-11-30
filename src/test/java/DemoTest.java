@@ -1,4 +1,4 @@
-import org.junit.jupiter.api.Test;
+ChromeDriverimport org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -17,16 +17,16 @@ public class DemoTest {
     }
 
     @Test
-    void openAmazonFirefox() {
-        WebDriver driver = new FirefoxDriver();
+    void openAmazon() {
+        WebDriver driver = new ChromeDriver();
         driver.get("https://www.amazon.in");
         assertTrue(driver.getTitle().toLowerCase().contains("amazon"));
         driver.quit();
     }
 
     @Test
-    void openFlipkartEdge() {
-        WebDriver driver = new EdgeDriver();
+    void openFlipkart() {
+        WebDriver driver = new ChromeDriver();
         driver.get("https://www.flipkart.com");
         assertTrue(driver.getTitle().toLowerCase().contains("flipkart"));
         driver.quit();
