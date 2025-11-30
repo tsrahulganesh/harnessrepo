@@ -29,7 +29,7 @@ pipeline:
             steps:
               - step:
                   type: Run
-                  name: Install JDK 11
+                  name: Install_JDK_11
                   identifier: Install_JDK_11
                   spec:
                     shell: Bash
@@ -39,7 +39,7 @@ pipeline:
                       java -version
               - step:
                   type: Run
-                  name: Maven Package
+                  name: Maven_Package
                   identifier: Maven_Package
                   spec:
                     shell: Bash
@@ -48,10 +48,9 @@ pipeline:
                       mvn clean package
               - step:
                   type: RunTests
-                  name: Maven Test and Reports
+                  name: Maven_Test_and_Reports
                   identifier: Maven_Test
                   spec:
-                    shell: Bash
                     language: Java
                     buildTool: Maven
                     args: test
@@ -62,7 +61,7 @@ pipeline:
                           - target/surefire-reports/*.xml
               - step:
                   type: Run
-                  name: Upload JAR
+                  name: Upload_JAR
                   identifier: Upload_JAR
                   spec:
                     shell: Bash
