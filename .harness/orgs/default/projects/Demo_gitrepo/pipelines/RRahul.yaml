@@ -38,15 +38,28 @@ pipeline:
                       apt-get install -y openjdk-11-jdk
                       java -version
               - step:
+                  type: RunTests
+                  name: Maven Test and Reports
+                  identifier: Maven_Test
+                  spec:
+                    shell: Bash
+                    language: Java
+                    buildTool: Maven
+                    args: clean test
+                    reports:
+                      type: JUnit
+                      spec:
+                        paths:
+                          - target/surefire-reports/*.xml
+              - step:
                   type: Run
-                  name: Maven Build
-                  identifier: Maven_Build
+                  name: Upload JAR
+                  identifier: Upload_JAR
                   spec:
                     shell: Bash
                     command: |
-                      echo "Current working directory:"
-                      pwd
-                      echo "Files in repo:"
-                      ls -la
-                      mvn -v
-                      mvn clean install
+                      mkdir -p .harness
+                      cp target/*.jar .harness/
+                    artifacts:
+                      paths:
+                        - .harness/*.jar
