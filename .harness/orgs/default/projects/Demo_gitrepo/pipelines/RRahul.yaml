@@ -3,7 +3,6 @@ pipeline:
   identifier: RRahul
   projectIdentifier: Demo_gitrepo
   orgIdentifier: default
-  tags: {}
   properties:
     ci:
       codebase:
@@ -20,6 +19,13 @@ pipeline:
         type: CI
         spec:
           cloneCodebase: true
+          codebase:
+            connectorRef: rrahul
+            repoName: automation-ci
+            build:
+              type: branch
+              spec:
+                branch: main
           platform:
             os: Linux
             arch: Amd64
@@ -55,5 +61,4 @@ pipeline:
                     shell: Bash
                     command: |
                       cd <+codebase.path>
-                      mvn -v
                       mvn clean install
