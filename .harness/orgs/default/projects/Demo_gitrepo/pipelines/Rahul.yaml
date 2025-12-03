@@ -7,7 +7,7 @@ pipeline:
     ci:
       codebase:
         connectorRef: rahul
-        repoName: automation-ci
+        repoName: harnessrepo
         build:
           type: branch
           spec:
