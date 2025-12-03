@@ -6,16 +6,16 @@ pipeline:
   properties:
     ci:
       codebase:
-        connectorRef: bobo
-        repoName: harnessrepo
+        connectorRef: rahul
+        repoName: automation-ci
         build:
           type: branch
           spec:
             branch: main
   stages:
     - stage:
-        name: rahulstg
-        identifier: rahulstg
+        name: Build_Stage
+        identifier: Build_Stage
         type: CI
         spec:
           cloneCodebase: true
@@ -29,20 +29,43 @@ pipeline:
             steps:
               - step:
                   type: Run
-                  name: Debug Step
-                  identifier: Debug_Step
+                  name: Install_JDK_17
+                  identifier: Install_JDK_17
                   spec:
                     shell: Bash
+                    image: cimg/openjdk:17.0
                     command: |
-                      echo "Codebase path = <+codebase.path>"
-                      ls -la <+codebase.path>
+                      java -version
               - step:
                   type: Run
-                  name: Maven Build
-                  identifier: Maven_Build
+                  name: Maven_Package
+                  identifier: Maven_Package
                   spec:
                     shell: Bash
+                    image: cimg/openjdk:17.0
                     command: |
-                      cd <+codebase.path>
                       mvn -v
-                      mvn clean install
+                      mvn clean package
+              - step:
+                  type: RunTests
+                  name: Maven_Test_and_Reports
+                  identifier: Maven_Test
+                  spec:
+                    language: Java
+                    buildTool: Maven
+                    args: test
+                    reports:
+                      type: JUnit
+                      spec:
+                        paths:
+                          - target/surefire-reports/*.xml
+              - step:
+                  type: Run
+                  name: Upload_JAR
+                  identifier: Upload_JAR
+                  spec:
+                    shell: Bash
+                    image: cimg/openjdk:17.0
+                    command: |
+                      mkdir -p .harness
+                      cp target/*.jar .harness/
