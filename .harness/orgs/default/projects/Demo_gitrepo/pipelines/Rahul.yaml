@@ -44,6 +44,8 @@ pipeline:
                     shell: Bash
                     image: cimg/openjdk:17.0
                     command: |
+                      cd $HARNESS_WORKSPACE
+                      ls -al
                       mvn -v
                       mvn clean package
               - step:
@@ -54,6 +56,8 @@ pipeline:
                     language: Java
                     buildTool: Maven
                     args: test
+                    preCommand: |
+                      cd $HARNESS_WORKSPACE
                     reports:
                       type: JUnit
                       spec:
@@ -67,5 +71,6 @@ pipeline:
                     shell: Bash
                     image: cimg/openjdk:17.0
                     command: |
+                      cd $HARNESS_WORKSPACE
                       mkdir -p .harness
                       cp target/*.jar .harness/
